@@ -1,14 +1,15 @@
 #! /bin/bash
 
 # Example CLI command for creating a VM with a managed identity
+# ./CreateVmWithManagedIdentity.sh XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX
 
+SUBSCRIPTION_ID=$1
+ADMIN_PASSWORD=$2
 RESOURCE_GROUP_NAME='rg-exampleGroupWithIdentity'
 VM_NAME='myVM-with-identity'
 REGION='centralus'
-SUBSCRIPTION_ID=""
-SUBSCRIPTION_NAME="/subscriptions/$SUBSCRIPTION_ID/resourcegroups/$RESOURCE_GROUP_NAME"
+SUBSCRIPTION_SCOPE="/subscriptions/$SUBSCRIPTION_ID/resourcegroups/$RESOURCE_GROUP_NAME"
 ADMIN_USERNAME='azureuser'
-ADMIN_PASSWORD='MySecur3P@ssw0rd'
 IMAGE_NAME='CentOS'
 
 
@@ -22,7 +23,7 @@ az vm create --resource-group $RESOURCE_GROUP_NAME \
 	--generate-ssh-keys \
 	--assign-identity \
 	--role contributor \
-	--scope $SUBSCRIPTION_NAME \
+	--scope $SUBSCRIPTION_SCOPE \
 	--admin-username $ADMIN_USERNAME \
 	--admin-password $ADMIN_PASSWORD
 
